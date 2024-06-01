@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InputFuntion</title>
+</head>
+<body>
+    <div id="contenter">
+        <select id="selectItem" style="width:200px;">
+            <option  class="optionTITLE">--請選擇資料--</option>
+        </select>
+    </div>
+</body>
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","http://localhost:8081/api/list",true);
+    xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                var select = document.getElementById("selectItem");
+                
+                data.forEach(function(item) {
+                    var option = document.createElement("option");
+                    option.className = "optionItem";
+                    option.textContent = item.name;
+                    option.value = item.id; // 如果你希望設置每個選項的值為id
+                    select.appendChild(option);
+                });
+            }
+        };
+    xhr.send();
+</script>
+</html>
